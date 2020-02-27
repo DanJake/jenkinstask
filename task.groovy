@@ -39,7 +39,7 @@ pipeline{
                     }
                     res[0] = mas[0]
                     j = 1
-                    for (int i=1; i < mas.length-1; i++) {
+                    for (int i=1; i < mas.length; i++) {
                         if (mas[i] < mas[i-1]){
                             res[j] = mas[i]
                             j++
