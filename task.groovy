@@ -11,35 +11,38 @@ pipeline{
             steps{
                 script{
                     def MyList = params.list.split(" ")
-                    int[] mas = new int[MyList.size()]
-                    int[] res = new int[3]
-                    boolean flag = false
-                    def buf
-                    int j = 0
-                    MyList.each{
-                            try{
-                                it = it.toInteger()
-                            } catch(Exception e) {
-                                error('Not a number')
-                            }
-                            mas[j] = it
-                            j++
-                    }
-                    while (!flag) {
+                    if (MyList.size() < 3)
+                        error('please print more argument')
+                    else{
+                        int[] mas = new int[MyList.size()]
+                        int[] res = new int[3]
+                        boolean flag = false
+                        def buf
+                        int i = 0
+                        MyList.each{
+                                try{
+                                    it = it.toInteger()
+                                } catch(Exception e) {
+                                    error('Not a number')
+                                }
+                                mas[i] = it
+                                i++
+                        }
+                        while (!flag) {
                         flag = true
-                        for (int i = 0; i < mas.length-1; i++) {
-                            if(mas[i] < mas[i+1]) {
-                                flag = false
+                            for (i = 0; i < mas.length-1; i++) {
+                                if(mas[i] < mas[i+1]) {
+                                    flag = false
 
-                                buf = mas[i]
-                                mas[i] = mas[i+1]
-                                mas[i+1] = buf
+                                    buf = mas[i]
+                                    mas[i] = mas[i+1]
+                                    mas[i+1] = buf
+                                }
                             }
                         }
-                    }
                     res[0] = mas[0]
-                    j = 1
-                    for (int i=1; i < mas.length; i++) {
+                    int j = 1
+                    for (i=1; i < mas.length; i++) {
                         if (mas[i] < mas[i-1]){
                             res[j] = mas[i]
                             j++
@@ -48,6 +51,7 @@ pipeline{
                         break
                     }
                     echo "$res"
+                    }
                 }
             }
         }
